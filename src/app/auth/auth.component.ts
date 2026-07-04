@@ -3,7 +3,7 @@ import { FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { Router } from '@angular/router';
-
+import { Auth } from '../services/auth';
 @Component({
   selector: 'app-auth',
   imports: [FormsModule, CommonModule],
@@ -35,7 +35,11 @@ export class AuthComponent {
   formGroupStep1: boolean = false;
   Router: any;
 
-  constructor(private snackBar: MatSnackBar, private router: Router) {}
+  constructor(
+    private snackBar: MatSnackBar,
+    private router: Router,
+    private authService: Auth,
+  ) {}
 
   preview() {
     this.show = !this.show;
@@ -43,10 +47,40 @@ export class AuthComponent {
   }
 
   register() {
-    this.snackBar.open('Registration Successful!', 'Close', {
-      duration: 3000,
-      verticalPosition: 'bottom',
-      horizontalPosition: 'right',
+    console.log('reg button clicked');
+    const permissions = [];
+
+    if (this.PostEdit) permissions.push('POST_EDIT');
+    if (this.Post) permissions.push('POST');
+    if (this.PostEditandPost) permissions.push('POST_EDIT_AND_POST');
+
+    const userData = {
+      username: this.username,
+      first_name: this.firstName,
+      last_name: this.lastName,
+      dob: this.dateogBirth,
+      gender: this.gender,
+      email: this.email,
+      password: this.password,
+      permissions: permissions.join(','),
+    };
+
+    this.authService.registerUser(userData).subscribe({
+      next: (response: any) => {
+        console.log('Registered:', response);
+        this.snackBar.open('Registered successfully! Please log in.', 'Close', {
+          duration: 3000,
+        });
+        // move to the login step automatically
+        this.formGroupStep = false;
+        this.formGroupStepTwo = true;
+      },
+      error: (err) => {
+        console.error('Registration failed:', err);
+        this.snackBar.open(err?.error?.message || 'Registration failed', 'Close', {
+          duration: 3000,
+        });
+      },
     });
   }
   login() {
@@ -55,21 +89,20 @@ export class AuthComponent {
       verticalPosition: 'bottom',
       horizontalPosition: 'right',
     });
-    console.log('USERNAME:', this.username);
+    console.log('EMAIL:', this.email);
+    this.authService.login(this.email, this.password).subscribe({
+      next: (response: any) => {
+        console.log(response);
+        localStorage.setItem('token', response.token);
+        localStorage.setItem('role', response.user.role.toUpperCase());
+        localStorage.setItem('userId', response.user.id);
 
-    let role;
-
-    if (this.username?.toLowerCase() === 'admin') {
-      role = 'ADMIN';
-    } else {
-      role = 'USER';
-    }
-
-    console.log('ROLE:', role);
-
-    localStorage.setItem('role', role);
-
-    this.router.navigate(['/postlist']);
+        this.router.navigate(['/postlist']);
+      },
+      error: (err) => {
+        console.error(err);
+      },
+    });
   }
 
   next() {

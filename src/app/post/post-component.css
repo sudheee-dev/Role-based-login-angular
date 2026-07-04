@@ -11,7 +11,15 @@ img {
   flex: 2;
   padding: 20px;
 }
-
+.post-image {
+  width: 100%;
+  max-width: 600px;
+  max-height: 80vh;
+  object-fit: contain;
+  border-radius: 10px;
+  display: block;
+  margin: 10px 0;
+}
 .quotes-container {
   flex: 1;
   padding: 20px;

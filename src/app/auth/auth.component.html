@@ -18,6 +18,23 @@
       <h1>Registrationtype</h1>
       <label>Enter Username</label>
       <input type="text" [(ngModel)]="username" name="username" placeholder="Enter Type of User" />
+
+      <div class="form-group">
+        <label for="regEmail"><b>Email</b></label>
+        <input type="email" [(ngModel)]="email" name="regEmail" id="regEmail" required />
+      </div>
+
+      <div class="form-group">
+        <label for="regPassword"><b>Password</b></label>
+        <input
+          type="password"
+          [(ngModel)]="password"
+          name="regPassword"
+          id="regPassword"
+          required
+        />
+      </div>
+
       <div class="radio-group">
         <label for="Admin"
           ><b>Admin Access</b>
@@ -80,10 +97,10 @@
           <label for="Gender">Verify Ur Gender:</label>
           <select [(ngModel)]="gender" name="gender">
             <option value="">-- Select Gender --</option>
-            <option value="F">Female</option>
-            <option value="M">MALE</option>
-            <option value="SM">She Male</option>
-            <option value="N">Dont Want to Specify</option>
+            <option value="Female">Female</option>
+            <option value="MALE">MALE</option>
+            <option value="She Male">She Male</option>
+            <option value="Dont Want to Specify">Dont Want to Specify</option>
             <p>Selected Gender: {{ gender }}</p>
           </select>
         </div>
@@ -143,10 +160,10 @@
           <label for="Gender">Verify Ur Gender:</label>
           <select [(ngModel)]="gender" name="gender">
             <option value="">-- Select Gender --</option>
-            <option value="F">Female</option>
-            <option value="M">MALE</option>
-            <option value="SM">She Male</option>
-            <option value="N">Dont Want to Specify</option>
+            <option value="Female">Female</option>
+            <option value="MALE">MALE</option>
+            <option value="She Male">She Male</option>
+            <option value="Dont Want to Specify">Dont Want to Specify</option>
             <p>Selected Gender: {{ gender }}</p>
           </select>
         </div>
