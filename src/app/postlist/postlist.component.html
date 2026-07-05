@@ -10,12 +10,12 @@
   <li>
     <a routerLink="/post-edit">post edit</a>
   </li>
+  <li>
+    <a [routerLink]="['/following-followers', 'followers']"> Followers </a>
+  </li>
 
   <li>
-    <a routerLink="/following-followers">following</a>
-  </li>
-  <li>
-    <a routerLink="/following-followers">followers</a>
+    <a [routerLink]="['/following-followers', 'following']"> Following </a>
   </li>
 
   <li style="float: right">

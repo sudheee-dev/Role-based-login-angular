@@ -67,4 +67,12 @@ export class Post {
   updateProfile(data: { username: string; first_name: string; last_name: string; bio: string }) {
     return this.http.put(`${this.baseUrl}/me/profile`, data, { headers: this.authHeaders() });
   }
+
+  getFollowers() {
+    return this.http.get<any[]>(`${this.baseUrl}/followers`, { headers: this.authHeaders() });
+  }
+
+  getFollowing() {
+    return this.http.get<any[]>(`${this.baseUrl}/following`, { headers: this.authHeaders() });
+  }
 }

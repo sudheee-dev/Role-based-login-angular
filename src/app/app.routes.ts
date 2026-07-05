@@ -15,7 +15,10 @@ export const routes: Routes = [
   { path: 'post-edit', component: PostEditListComponent },
   { path: 'edit-post/:id', component: PostEditComponent },
   { path: 'editprofile', component: EditProfileComponent },
-  { path: 'following-followers', component: FollowingFollowers },
+  {
+    path: 'following-followers/:type',
+    component: FollowingFollowers,
+  },
 
   { path: 'post', component: PostComponent },
 ];
